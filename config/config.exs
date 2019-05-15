@@ -12,7 +12,8 @@ config :demo, DemoWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "W3dzgfmnz4nKTeDXAhj3Uuk8ZO8JivKjTPkqDLrgoA+S2/FDh8jGJe9nO2dft6eE",
   render_errors: [view: DemoWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Demo.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Demo.PubSub, adapter: Phoenix.PubSub.PG2],
+  instrumenters: [DemoWeb.Endpoint.PhoenixInstrumenter, DemoWeb.PlugPipelineInstrumenter]
 
 # Configures Elixir's Logger
 config :logger, :console,

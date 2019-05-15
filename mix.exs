@@ -39,7 +39,11 @@ defmodule Demo.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:telemetry, "~> 0.4"},
       {:peerage, "~> 1.0"},
-      {:singleton, "~> 1.2"}
+      {:singleton, "~> 1.2"},
+      {:prometheus_ex, "~> 3.0"},
+      {:prometheus_phoenix, "~> 1.2"},
+      {:prometheus_plugs, "~> 1.1"},
+      {:prometheus_process_collector, "~> 1.0"}
     ]
   end
 end

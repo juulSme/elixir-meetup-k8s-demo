@@ -10,6 +10,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: demo-backend-service
+  labels:
+    k8s-app: demo-backend # for monitoring discovery
 spec:
   type: ClusterIP # normally a clusterip service is unreachable for the outside world, but not with microk8s
   selector:

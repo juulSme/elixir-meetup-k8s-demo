@@ -1,0 +1,22 @@
+#########################################
+# CoreOS Prometheus Operator monitoring # https://github.com/coreos/prometheus-operator/tree/master/contrib/kube-prometheus
+#########################################
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: demo-backend-monitoring
+  namespace: monitoring # must run in same namespace as Prometheus
+  labels:
+    k8s-app: demo-backend # target pod selector
+spec:
+  jobLabel: demo-backend
+  selector:
+    matchLabels:
+      k8s-app: demo-backend
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+    - port: http-port
+      interval: 15s

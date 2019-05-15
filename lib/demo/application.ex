@@ -15,6 +15,7 @@ defmodule Demo.Application do
     ]
 
     Singleton.start_child(Demo.AttentionSeekingChild, [name: "Alice"], :alice)
+    Demo.Monitoring.setup()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

@@ -21,6 +21,9 @@ defmodule DemoWeb.Endpoint do
     plug Phoenix.CodeReloader
   end
 
+  plug Demo.PlugExporter
+  plug DemoWeb.PlugPipelineInstrumenter
+
   plug Plug.RequestId
   plug Plug.Logger
 
