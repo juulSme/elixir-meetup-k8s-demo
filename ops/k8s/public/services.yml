@@ -19,3 +19,17 @@ spec:
       port: 4000
       targetPort: 4000
       protocol: TCP
+
+# Headless backend service (for Elixir/Erlang node discovery)
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo-backend-service-headless
+spec:
+  type: ClusterIP
+  selector:
+    app: demo
+  clusterIP: None # Headless service - it does not have an IP of its own but exposes the IP's of the pods themselves
+  ports:
+    - port: 8000 # Nonsense, unused port. A headless service needs one (:|) as a workaround for a Kubernetes bug

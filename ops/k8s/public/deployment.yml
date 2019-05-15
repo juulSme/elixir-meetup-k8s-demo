@@ -21,6 +21,12 @@ spec:
           command: ["elixir"]
           args:
             [
+              "--erl",
+              "-kernel inet_dist_listen_min 5000 -kernel inet_dist_listen_max 5000",
+              "--name",
+              "demo@$(MY_POD_IP)",
+              "--cookie",
+              "$(ERLANG_COOKIE)",
               "-S",
               "mix",
               "phx.server",
@@ -29,3 +35,19 @@ spec:
           ports:
             - name: http-port
               containerPort: 4000
+            - name: epmd-port
+              containerPort: 4369
+            - name: beam-port
+              containerPort: 5000
+          env:
+            - name: MY_POD_IP # Used as Erlang VM node name
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP      
+            - name: ERLANG_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: demo-secrets
+                  key: ERLANG_COOKIE
+            - name: NODE_DISCOVERY_DNS_NAME
+              value: demo-backend-service-headless.default.svc.cluster.local
