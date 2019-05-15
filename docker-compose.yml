@@ -1,0 +1,62 @@
+version: "3.7"
+
+services:
+    demo-load-balancer:
+        image: nginx:stable-alpine
+        ports:
+            - 4000:4000
+        volumes:
+            - ./ops/local/nginx.conf:/etc/nginx/nginx.conf:ro
+        depends_on:
+            - demo-backend-one
+            - demo-backend-two
+
+    demo-backend-one:
+        container_name: demo-backend-one
+        hostname: demo-backend-one. # For BEAM node name
+        image: demo-backend-dev
+        build:
+            context: .
+            dockerfile: ./ops/dockerfiles/local.dockerfile
+        working_dir: /application
+        # The top mount mounts the local source code into the container for compilation and running.
+        # The other mounts effectively function as exclusions on the top mount, to prevent build artifacts from being created locally (as root).
+        # Some of the other mounts are mapped to docker volumes to improve build-on-build performance by caching the build artifacts.
+        # To completely clean the volumes, execute `docker-compose down -v` in a shell. A subsequent `docker-compose up` will run in a fresh environment.
+        volumes:
+            - .:/application:cached
+            - /application/.elixir_ls
+            - demo_backend_1_build:/application/_build
+            - demo_backend_1_deps:/application/deps
+            - demo_backend_1_mix:/root/.mix
+        environment:            
+            ERLANG_COOKIE: supersecretcookie
+            MIX_ENV: compose
+        command: /bin/sh /application/ops/local/local_entrypoint.sh
+
+    demo-backend-two:
+        container_name: demo-backend-two
+        hostname: demo-backend-two. # For BEAM node name
+        image: demo-backend-dev
+        build:
+            context: .
+            dockerfile: ./ops/dockerfiles/local.dockerfile
+        working_dir: /application
+        volumes:
+            - .:/application:cached
+            - /application/.elixir_ls
+            - demo_backend_2_build:/application/_build
+            - demo_backend_2_deps:/application/deps
+            - demo_backend_2_mix:/root/.mix
+        environment:
+            ERLANG_COOKIE: supersecretcookie
+            MIX_ENV: compose
+        command: /bin/sh /application/ops/local/local_entrypoint.sh
+
+volumes:
+    demo_backend_1_build:
+    demo_backend_1_deps:
+    demo_backend_1_mix:
+    demo_backend_2_build:
+    demo_backend_2_deps:
+    demo_backend_2_mix:

@@ -1,0 +1,23 @@
+# Exclude unnecessary ops files
+/ops/*
+!/ops/*.sh
+!/ops/*/*.sh
+
+# Exclude local artifacts & dev config
+/.vscode
+/_build
+/deps
+/.elixir_ls
+/doc
+/.git
+/.gitignore
+
+# Exclude local HTTPS certificates and test code
+/priv/cert/*
+!/priv/cert/dhparam.pem
+/test
+
+# Exclude other
+/docker-compose.yml
+/README.md
+/erl_crash.dump
