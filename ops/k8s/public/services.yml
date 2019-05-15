@@ -1,0 +1,21 @@
+############
+# Services # https://kubernetes.io/docs/concepts/services-networking/service/
+############
+
+# The main service that is exposed to the ingress / load balancer
+# Reachable at its ClusterIP when using microk8s
+# kubectl get svc demo-backend-service
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo-backend-service
+spec:
+  type: ClusterIP # normally a clusterip service is unreachable for the outside world, but not with microk8s
+  selector:
+    app: demo
+  ports:
+    - name: http-port
+      port: 4000
+      targetPort: 4000
+      protocol: TCP
