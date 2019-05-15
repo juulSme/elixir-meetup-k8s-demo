@@ -14,6 +14,8 @@ defmodule Demo.Application do
       # {Demo.Worker, arg},
     ]
 
+    Singleton.start_child(Demo.AttentionSeekingChild, [name: "Alice"], :alice)
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Demo.Supervisor]

@@ -19,7 +19,7 @@ defmodule Demo.MixProject do
   def application do
     [
       mod: {Demo.Application, []},
-      extra_applications: [:logger, :runtime_tools, :peerage]
+      extra_applications: [:logger, :runtime_tools, :peerage, :singleton]
     ]
   end
 
@@ -38,7 +38,8 @@ defmodule Demo.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:telemetry, "~> 0.4"},
-      {:peerage, "~> 1.0"}
+      {:peerage, "~> 1.0"},
+      {:singleton, "~> 1.2"}
     ]
   end
 end
