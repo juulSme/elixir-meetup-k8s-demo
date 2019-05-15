@@ -8,4 +8,9 @@ mix clean
 mix compile
 
 # Spin up the server
-elixir -S mix phx.server
+elixir \
+  --erl "-kernel inet_dist_listen_min 5000" \
+  --erl "-kernel inet_dist_listen_max 5000" \
+  --name demo@$HOSTNAME \
+  --cookie $ERLANG_COOKIE \
+  -S mix phx.server
